@@ -32,12 +32,12 @@
                 <div class="form-group">
                   <label for="pwd">Payment Method</label> <br> <br>
                  
-                  <input type="radio" value="cash" name="payment"> <span>EMI payment</span> <br><br>
+                  <input type="radio" value="onlinepayment" name="payment"> <span>Payonline</span> <br><br>
                   <input type="radio" value="cash" name="payment"> <span>Payment on Delivery</span> <br> <br>
 
                 </div>
               
-                <H5>or</H5><a href="/payonline"> <span><strong>PayOnline:</strong></span> <br> <br>
+                
            
                 <button type="submit" class="btn btn-default">Order Now</button>
               </form>
