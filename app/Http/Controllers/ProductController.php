@@ -70,6 +70,25 @@ return Cart::where('user_id',$userId)->count();
     {
         $userId=Session::get('user')['id'];//get all cart data depending on user who had loggedin 
          $allCart= Cart::where('user_id',$userId)->get();
+         if ($req->payment == "onlinepayment") {
+            return redirect('payonline');
+
+            foreach($allCart as $cart)
+         {
+             $order= new Order; //created instance of order model
+             $order->product_id=$cart['product_id'];
+             $order->users_id=$cart['user_id'];
+             $order->status="pending";
+             $order->payment_method="onlinepayment";
+             $order->payment_status="pending";
+             $order->address=$req->address;
+             $order->save();
+             Cart::where('user_id',$userId)->delete();  //after placcing oreder data remove from cart
+         }
+         }
+         else {
+            
+      
          foreach($allCart as $cart)
          {
              $order= new Order; //created instance of order model
@@ -82,6 +101,7 @@ return Cart::where('user_id',$userId)->count();
              $order->save();
              Cart::where('user_id',$userId)->delete();  //after placcing oreder data remove from cart
          }
+        }
          $req->input();
          return redirect('/');
     }
@@ -143,13 +163,12 @@ $status= $this->api->payment->fetch($req->get('payment_id'));
 if ($status->status == 'authorized') {
    // return redirect('/')->with('success','payment Sucessfully done');
     $userId=Session::get('user')['id'];//get all cart data depending on user who had loggedin 
- 
+   
+    Cart::where('user_id',$userId)->delete();
+    return redirect('cartlist');
+
     Cart::where('user_id',$userId)->delete();
     return redirect('/');
-    # code...
 }
-
-
+            }
         }
-}
-
